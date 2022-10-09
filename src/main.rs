@@ -2,7 +2,7 @@
 
 use clap::Parser;
 use serde::{Deserialize, Serialize};
-use std::{fs, path::PathBuf, str::FromStr};
+use std::{fs, path::PathBuf};
 use typed_html::{dom::DOMTree, html, text};
 
 static CSS_FILE: &'static str = include_str!("kanban.css");
@@ -12,7 +12,6 @@ struct Board {
     title: String,
     description: String,
     author: String,
-    colors: Vec<String>,
 }
 
 impl Board {
@@ -21,12 +20,6 @@ impl Board {
             title: "My cool project".to_string(),
             description: "Insert description here".to_string(),
             author: "Anonymous".to_string(),
-            colors: vec![
-                "red".to_string(),
-                "yellow".to_string(),
-                "orange".to_string(),
-                "green".to_string(),
-            ],
         }
     }
 }
@@ -123,7 +116,7 @@ fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Resu
     Ok(())
 }
 
-fn init_board(path: PathBuf) -> Result<(), String> {
+fn init_board(path: PathBuf, force: bool) -> Result<(), String> {
     fs::create_dir_all(path.clone()).map_err(|e| e.to_string())?;
 
     // check if dir empty
@@ -132,7 +125,7 @@ fn init_board(path: PathBuf) -> Result<(), String> {
         .unwrap()
         .count();
 
-    if count == 0 {
+    if count == 0 || force {
         // write config.toml
         let toml_path = path.join("config.toml");
 
@@ -166,7 +159,7 @@ fn main() {
     match args.command.as_str() {
         "init" => {
             if args.path.is_some() {
-                init_board(args.path.unwrap())
+                init_board(args.path.unwrap(),true)
                     .map_err(|e| println!("{}", e.as_str()))
                     .ok();
             } else {
