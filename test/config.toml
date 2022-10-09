@@ -1,0 +1,9 @@
+title = 'My cool project'
+description = 'Insert description here'
+author = 'Anonymous'
+colors = [
+    'red',
+    'yellow',
+    'orange',
+    'green',
+]
