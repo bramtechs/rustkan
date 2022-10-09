@@ -1,6 +1,64 @@
 body {
-    font-family: Ubuntu;
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
     font-size: 1rem;
     color: black;
     background-color: white;
 }
+
+
+/* Define colors here  */
+body > ul > li {
+    background-color: lightgray; 
+}
+
+body > ul > li:nth-child(1){
+    background-color: lightgray;
+}
+body > ul > li:nth-child(2){
+    background-color: bisque;
+}
+body > ul > li:nth-child(3){
+    background-color: tan;
+}
+body > ul > li:nth-child(4){
+    background-color: lightgreen;
+}
+
+/* I'm sorry for below */
+
+body > ul {
+    padding-left: 0.5rem;
+}
+
+/* per column */
+body > ul > li { 
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    display: inline-block;
+    min-width: 15rem;
+}
+
+body > ul > li > ul{ 
+    list-style-type: none;
+}
+
+body > ul > li > ul{ 
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+/* per item */
+body > ul > li > ul > li:first-child {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2rem;
+    border-bottom: 0.0625rem dashed;
+    margin-bottom: 1rem;
+}
+
+body > ul > li > ul > li {
+    padding-left: 0rem;
+    margin-bottom: 1rem;
+}
+
