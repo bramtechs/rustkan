@@ -4,8 +4,9 @@ A Rust program that exports a csv file to a **read-only** html **kanboard**, mea
 Can be easily hosted on services like Netlify.
 
 ## Installation 
+- Clone this repo
 - Have cargo and Rust installed.
-- Run `sh install` (check before running)
+- Run `sh install` *(check before running)*
 
 ## Usage
 1. Initialize a new board
@@ -18,11 +19,17 @@ rustkan init my_board
 ```console
 rustkan export my_board
 ```
-4. This will (re)generate `kanboard.html` in the `my_board` directory. Edit `kanban.css` to your hearts content.
+or
+```
+cd my_board
+rustkan export
+```
+
+4. This will (re)generate `index.html` in the `my_board` directory. Edit `kanban.css` to your hearts content.
 
 For advanced usage, view source.
 
 ## Preview
 ![Preview](preview.png)
 
-CSS also adapts to mobile!
+The page also adapts to mobile!
