@@ -24,6 +24,7 @@ or
 cd my_board
 rustkan export
 ```
+> Warning: This will reset `kanban.css!`
 
 4. This will (re)generate `index.html` in the `my_board` directory. Edit `kanban.css` to your hearts content.
 
