@@ -1,6 +1,4 @@
 # Rustkan
-Work-in-progress
-
 A Rust program that exports a .csv file to a **read-only** .html kanboard that you can easily host on services like Netlify.
 
 ## Installation 
@@ -12,7 +10,7 @@ A Rust program that exports a .csv file to a **read-only** .html kanboard that y
 ```console
 rustkan init my_board 
 ```
-2. Edit `config.toml` and `board.csv`
+2. Edit `config.toml` and `board.csv` in `my_board`
 
 3. Export/regenerate the board
 ```console
@@ -23,6 +21,6 @@ rustkan export my_board
 For advanced usage, view source.
 
 ## Preview
-![Preview](preview.png Preview of a kanboard)
+![Preview](preview.png)
 
-It also adapts to mobile!
+CSS also adapts to mobile!
