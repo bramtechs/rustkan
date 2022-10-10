@@ -1,5 +1,7 @@
 # Rustkan
-A Rust program that exports a .csv file to a **read-only** .html kanboard that you can easily host on services like Netlify.
+A Rust program that exports a csv file to a **read-only** html **kanboard**, meant for spectators.
+
+Can be easily hosted on services like Netlify.
 
 ## Installation 
 - Have cargo and Rust installed.
