@@ -2,7 +2,7 @@
 
 use clap::Parser;
 use serde::{Deserialize, Serialize};
-use std::{fs, path::PathBuf};
+use std::{fs, path::PathBuf, str::FromStr};
 use typed_html::{dom::DOMTree, html, text};
 
 static CSS_FILE: &'static str = include_str!("kanban.css");
@@ -33,7 +33,7 @@ struct Cli {
 }
 
 fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Result<(), String> {
-    let current = std::env::current_exe().map_err(|e| e.to_string())?;
+    let current = PathBuf::from_str(".").map_err(|e| e.to_string())?;
     let source_path = source_path.unwrap_or(current);
     let dest_path = dest_path.unwrap_or(source_path.clone());
 
@@ -124,7 +124,7 @@ fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Resu
 
     // write generated html
     let html_string = html.to_string();
-    let html_path = source_path.join("kanboard.html");
+    let html_path = source_path.join("index.html");
     fs::write(html_path, html_string).map_err(|e| e.to_string())?;
 
     // write template css file
