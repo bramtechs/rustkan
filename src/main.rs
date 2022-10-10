@@ -96,6 +96,7 @@ fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Resu
             <body>
                 <header>
                     <h1>{text!(config.title)}</h1>
+                    <h2>"created by "{text!(config.author)}</h2>
                     <p>{text!(config.description)}</p>
                     <time>"Last edited on "{text!(date_time_string)}</time>
                 </header>
