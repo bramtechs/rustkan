@@ -180,7 +180,7 @@ fn main() {
     match args.command.as_str() {
         "init" => {
             if args.path.is_some() {
-                init_board(args.path.unwrap(), true)
+                init_board(args.path.unwrap(), false)
                     .map_err(|e| println!("{}", e.as_str()))
                     .ok();
             } else {

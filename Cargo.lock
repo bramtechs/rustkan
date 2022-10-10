@@ -889,6 +889,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rustkan"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "clap",
+ "csv",
+ "serde",
+ "toml",
+ "typed-html",
+]
+
+[[package]]
 name = "ryu"
 version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -937,18 +949,6 @@ name = "siphasher"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b8de496cf83d4ed58b6be86c3a275b8602f6ffe98d3024a869e124147a9a3ac"
-
-[[package]]
-name = "static-kanboard"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "clap",
- "csv",
- "serde",
- "toml",
- "typed-html",
-]
 
 [[package]]
 name = "string_cache"

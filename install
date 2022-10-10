@@ -1,0 +1,13 @@
+#!/bin/bash
+mkdir -p program
+cargo build --release
+cp ./target/release/static-kanboard ./program/
+chmod +x ./program/rustkan
+
+exe=`pwd`/program/
+line='PATH="$PATH:'$exe'"'
+
+echo "Appending $line to ~/.bashrc..."
+echo "" >> ~/.bashrc
+echo $line >> ~/.bashrc
+sh ~/.bashrc
