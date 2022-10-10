@@ -5,6 +5,32 @@ body {
     background-color: white;
 }
 
+header {
+    padding: 0.4rem;
+    background: linear-gradient(90deg, rgba(206,203,246,1) 0%, rgba(178,242,255,1) 100%);;
+}
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+header p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+header time {
+    font-style: italic;
+    color: black;
+}
+
+footer {
+    position: fixed;
+    padding: 1rem;
+    border-top: 0.0625rem dotted;
+    bottom: 0;
+    width:100%;
+}
+
 
 /* Define colors here  */
 body > ul > li {
@@ -23,8 +49,6 @@ body > ul > li:nth-child(3){
 body > ul > li:nth-child(4){
     background-color: lightgreen;
 }
-
-/* I'm sorry for below */
 
 body > ul {
     padding-left: 0.5rem;
@@ -57,8 +81,30 @@ body > ul > li > ul > li:first-child {
     margin-bottom: 1rem;
 }
 
-body > ul > li > ul > li {
+body > ul > li > ul > li:not(:first-child) {
     padding-left: 0rem;
     margin-bottom: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
+/* mobile */
+
+@media only screen and (max-width: 600px) {
+    /* per column */
+    body > ul > li { 
+        border-radius: 0.5rem;
+        margin: 0.5rem;
+        display: inline-block;
+        width: 100%;
+    }
+    body > ul {
+        padding-left: 0rem;
+        margin-right: 1rem;
+    }
+    footer {
+        text-align: center;
+        position: relative;
+    }
+}

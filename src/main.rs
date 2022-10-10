@@ -1,4 +1,4 @@
-#![recursion_limit = "256"]
+#![recursion_limit = "512"]
 
 use clap::Parser;
 use serde::{Deserialize, Serialize};
@@ -6,6 +6,7 @@ use std::{fs, path::PathBuf};
 use typed_html::{dom::DOMTree, html, text};
 
 static CSS_FILE: &'static str = include_str!("kanban.css");
+static CSS_RESET_FILE: &'static str = include_str!("reset.css");
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Board {
@@ -34,8 +35,7 @@ struct Cli {
 fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Result<(), String> {
     let current = std::env::current_exe().map_err(|e| e.to_string())?;
     let source_path = source_path.unwrap_or(current);
-    let default_dest_path = source_path.join("kanboard.html");
-    let dest_path = dest_path.unwrap_or(default_dest_path);
+    let dest_path = dest_path.unwrap_or(source_path.clone());
 
     // load config
     let config_path = source_path.join("config.toml");
@@ -82,16 +82,23 @@ fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Resu
         }
     });
 
+    // get curren date
+    let date_time = chrono::offset::Utc::now();
+    let date_time_string = date_time.format("%d/%m/%Y %H:%M UTC").to_string();
+
     let html: DOMTree<String> = html! (
         <html>
             <head>
                 <title>{text!(config.title.clone())}</title>
+                <link rel="stylesheet" href="reset.css"/>
                 <link rel="stylesheet" href="kanban.css"/>
             </head>
             <body>
-                <h1>{text!(config.title)}</h1>
-                <p>{text!(config.description)}</p>
-                <hr/>
+                <header>
+                    <h1>{text!(config.title)}</h1>
+                    <p>{text!(config.description)}</p>
+                    <time>"Last edited on "{text!(date_time_string)}</time>
+                </header>
                 <ul>
                 {
                     items.iter().map(|c| html!(
@@ -107,12 +114,25 @@ fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Resu
                     ))
                 }
                 </ul>
+                <footer>
+                        <p>"Statically generated with "<a href="https://github.com/bramtechs/rust-html-kanboard" target="_blank">"with Rust!"</a></p>
+                </footer>
             </body>
         </html>
     );
 
+    // write generated html
     let html_string = html.to_string();
-    fs::write(dest_path, html_string).map_err(|e| e.to_string())?;
+    let html_path = source_path.join("kanboard.html");
+    fs::write(html_path, html_string).map_err(|e| e.to_string())?;
+
+    // write template css file
+    let css_path = dest_path.join("kanban.css");
+    fs::write(css_path, CSS_FILE).map_err(|e| e.to_string())?;
+
+    // write reset css file
+    let css_reset_path = dest_path.join("reset.css");
+    fs::write(css_reset_path, CSS_RESET_FILE).map_err(|e| e.to_string())?;
     Ok(())
 }
 
@@ -140,12 +160,13 @@ fn init_board(path: PathBuf, force: bool) -> Result<(), String> {
 
         csv.write_record(&["TODO", "In-progress", "Backburner", "Done"])
             .map_err(|e| e.to_string())?;
-        csv.write_record(&["Implement feature", "Rewrite in Rust", "Fix bug", "Host repo"])
-            .map_err(|e| e.to_string())?;
-
-        // write template css file
-        let css_path = path.join("kanban.css");
-        fs::write(css_path, CSS_FILE).map_err(|e| e.to_string())?;
+        csv.write_record(&[
+            "Implement feature",
+            "Rewrite in Rust",
+            "Fix bug",
+            "Host repo",
+        ])
+        .map_err(|e| e.to_string())?;
 
         Ok(())
     } else {
@@ -159,7 +180,7 @@ fn main() {
     match args.command.as_str() {
         "init" => {
             if args.path.is_some() {
-                init_board(args.path.unwrap(),true)
+                init_board(args.path.unwrap(), true)
                     .map_err(|e| println!("{}", e.as_str()))
                     .ok();
             } else {
