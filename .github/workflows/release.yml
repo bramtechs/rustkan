@@ -13,7 +13,8 @@ jobs:
       - uses: taiki-e/create-gh-release-action@v1
         with:
           # (optional)
-          changelog: [LICENSE.md, README.md]
+          changelog: LICENSE.md
+          readme: README.md
         env:
           # (required)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
