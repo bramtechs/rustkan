@@ -1,5 +1,7 @@
 #![recursion_limit = "512"]
 
+mod tests;
+
 use clap::Parser;
 use serde::{Deserialize, Serialize};
 use std::{fs, path::PathBuf, str::FromStr};
@@ -137,7 +139,7 @@ fn export_html(source_path: Option<PathBuf>, dest_path: Option<PathBuf>) -> Resu
     Ok(())
 }
 
-fn init_board(path: PathBuf, force: bool) -> Result<(), String> {
+fn init_board(path: &PathBuf, force: bool) -> Result<(), String> {
     fs::create_dir_all(path.clone()).map_err(|e| e.to_string())?;
 
     // check if dir empty
@@ -181,7 +183,7 @@ fn main() {
     match args.command.as_str() {
         "init" => {
             if args.path.is_some() {
-                init_board(args.path.unwrap(), false)
+                init_board(&args.path.unwrap(), false)
                     .map_err(|e| println!("{}", e.as_str()))
                     .ok();
             } else {
@@ -189,7 +191,9 @@ fn main() {
             }
         }
         "export" => {
-            export_html(args.path, args.path2)
+            let source = args.path as Option<PathBuf>;
+            let dest = args.path2 as Option<PathBuf>;
+            export_html(source, dest)
                 .map_err(|e| println!("{}", e.to_string()))
                 .ok();
         }
