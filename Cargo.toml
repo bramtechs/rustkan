@@ -9,6 +9,8 @@ edition = "2021"
 chrono = "0.4.22"
 clap = { version = "4.0.11", features = ["derive"] }
 csv = "1.1.6"
+log = "0.4.17"
+pretty_env_logger = "0.4.0"
 serde = { version = "1.0.145", features= ["derive"] }
 toml = "0.5.9"
 typed-html = { git = "https://github.com/bodil/typed-html", rev = "4c13ecca" }

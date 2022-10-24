@@ -3,6 +3,8 @@
 mod tests;
 
 use clap::Parser;
+use log::{error, info};
+use pretty_env_logger;
 use serde::{Deserialize, Serialize};
 use std::{fs, path::PathBuf, str::FromStr};
 use typed_html::{dom::DOMTree, html, text};
@@ -177,25 +179,40 @@ fn init_board(path: &PathBuf, force: bool) -> Result<(), String> {
     }
 }
 
-fn main() {
-    let args = Cli::parse();
+// TODO implement install in code
 
+fn install() -> Result<(), String> {
+    fs::create_dir_all("~/.local/bin").map_err(|e| e.to_string())?;
+
+    info!("Installed program to ~/.local/bin");
+    Ok(())
+}
+
+fn main() {
+    // this dumb hack is neccesary to get damn logging on screen
+    pretty_env_logger::formatted_builder().filter_level(log::LevelFilter::Trace).init();
+
+    let args = Cli::parse();
     match args.command.as_str() {
         "init" => {
-            if args.path.is_some() {
-                init_board(&args.path.unwrap(), false)
-                    .map_err(|e| println!("{}", e.as_str()))
+            if let Ok(default) = PathBuf::from_str(".") {
+                let path = &args.path.unwrap_or(default);
+                init_board(path, false)
+                    .map_err(|e| error!("Could not initialize board: {}", e.to_string()))
                     .ok();
             } else {
-                println!("No path specified, pass '.' as argument for current path.");
+                error!("Could not determine dot path.");
             }
         }
         "export" => {
             let source = args.path as Option<PathBuf>;
             let dest = args.path2 as Option<PathBuf>;
             export_html(source, dest)
-                .map_err(|e| println!("{}", e.to_string()))
+                .map_err(|e| error!("Could not export board: {}", e.to_string()))
                 .ok();
+        }
+        "install" => {
+            install().map_err(|e| error!("{}", e)).ok();
         }
         _ => println!("Unknown command given"),
     }

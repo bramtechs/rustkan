@@ -1,0 +1,116 @@
+body {
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    color: black;
+    background-color: white;
+}
+
+header {
+    padding: 0.4rem;
+    background: linear-gradient(90deg, rgba(206,203,246,1) 0%, rgba(178,242,255,1) 100%);;
+}
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+header h2 {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+header p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+header time {
+    font-style: italic;
+    color: black;
+}
+
+footer {
+    position: fixed;
+    padding: 1rem;
+    border-top: 0.0625rem dotted;
+    bottom: 0;
+    width:100%;
+}
+
+
+/* Define colors here  */
+body > ul > li {
+    background-color: lightgray; 
+}
+
+body > ul > li:nth-child(1){
+    background-color: lightgray;
+}
+body > ul > li:nth-child(2){
+    background-color: bisque;
+}
+body > ul > li:nth-child(3){
+    background-color: tan;
+}
+body > ul > li:nth-child(4){
+    background-color: lightgreen;
+}
+
+body > ul {
+    padding-left: 0.5rem;
+}
+
+/* per column */
+body > ul > li { 
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+    display: inline-block;
+    vertical-align: text-top;
+    min-width: 15rem;
+}
+
+body > ul > li > ul{ 
+    list-style-type: none;
+}
+
+body > ul > li > ul{ 
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+/* per item */
+body > ul > li > ul > li:first-child {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2rem;
+    border-bottom: 0.0625rem dashed;
+    margin-bottom: 1rem;
+}
+
+body > ul > li > ul > li:not(:first-child) {
+    padding-left: 0rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+/* mobile */
+
+@media only screen and (max-width: 600px) {
+    /* per column */
+    body > ul > li { 
+        border-radius: 0.5rem;
+        margin: 0.5rem;
+        display: inline-block;
+        width: 100%;
+    }
+    body > ul {
+        padding-left: 0rem;
+        margin-right: 1rem;
+    }
+    footer {
+        text-align: center;
+        position: relative;
+    }
+}
